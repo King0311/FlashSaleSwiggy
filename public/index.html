@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Swiggy Flash Sale Checker</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f2f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: white;
+      background: #ff5722;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #e64a19;
+    }
+
+    #status {
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📤 Upload CSV to Check Flash Sale Items</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <label for="restaurantId">Restaurant ID:</label>
+      <input type="text" name="restaurantId" id="restaurantId" required />
+
+      <label for="lat">Latitude:</label>
+      <input type="text" name="lat" id="lat" value="00" required />
+
+      <label for="lng">Longitude:</label>
+      <input type="text" name="lng" id="lng" value="00" required />
+
+      <label for="csvfile">CSV File:</label>
+      <input type="file" name="csvfile" id="csvfile" accept=".csv" required />
+
+      <button type="submit">🚀 Check Flash Sale</button>
+    </form>
+
+    <p id="status"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const status = document.getElementById('status');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      status.textContent = '⏳ Checking flash sale...';
+
+      try {
+        const res = await fetch('/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (res.ok) {
+          const blob = await res.blob();
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'missing_flash_sale.csv';
+          a.click();
+          status.textContent = '✅ Done! Download started.';
+        } else {
+          const errorText = await res.text();
+          status.textContent = `❌ Error: ${errorText}`;
+        }
+      } catch (err) {
+        status.textContent = `❌ Error: ${err.message}`;
+      }
+    });
+  </script>
+</body>
+</html>

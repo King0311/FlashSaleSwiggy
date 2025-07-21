@@ -1,0 +1,31 @@
+{
+  "name": "flash-sale-scrapper",
+  "version": "1.0.0",
+  "main": "scrape.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "type": "module",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.10.0",
+    "cors": "^2.8.5",
+    "csv-parse": "^6.1.0",
+    "csv-parser": "^3.2.0",
+    "csv-stringify": "^6.6.0",
+    "csv-writer": "^1.6.0",
+    "express": "^5.1.0",
+    "fuzzball": "^2.2.2",
+    "inquirer": "^9.3.7",
+    "inquirer-file-tree-selection-prompt": "^2.0.5",
+    "json2csv": "^6.0.0-alpha.2",
+    "multer": "^2.0.2",
+    "node-fetch": "^2.7.0",
+    "prompt-sync": "^4.2.0",
+    "puppeteer": "^24.12.1"
+  },
+  "description": ""
+}
