@@ -71,7 +71,7 @@ async function checkOutlet(outlet, itemNames) {
     return itemNames.map(item => {
       const match = menuItems.find(m => m.name.toLowerCase() === item.toLowerCase());
       if (!match) {
-        return { restaurantId, name, item, basePrice: '-', finalPrice: '-', status: 'Not Found' };
+        return { restaurantId, name, item, basePrice: '-', finalPrice: '-', status: 'Out of Stock' };
       } else if (!match.isDiscounted) {
         return {
           restaurantId,
@@ -79,7 +79,7 @@ async function checkOutlet(outlet, itemNames) {
           item: match.name,
           basePrice: match.basePrice,
           finalPrice: match.finalPrice,
-          status: 'Not Discounted'
+          status: 'No flash sale active'
         };
       } else {
         return null; // Discounted – skip
